@@ -34,7 +34,7 @@ const App = () => {
                 Process Packets
             </button>
             <PacketProcessor packets={packets} isProcessing={isProcessing} />
-            <CSVDownload packets={packets} />
+            <CSVDownload data={packets} />
         </div>
     );
 };
