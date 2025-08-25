@@ -1,0 +1,32 @@
+{
+  "name": "pdf-bookmark-packet-app",
+  "version": "1.0.0",
+  "description": "A single-page web application for processing PDFs based on bookmarks and generating CSV files.",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.0",
+    "pdf-lib": "^1.17.1",
+    "papaparse": "^5.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0"
+  },
+  "keywords": [
+    "pdf",
+    "bookmarks",
+    "csv",
+    "react"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
