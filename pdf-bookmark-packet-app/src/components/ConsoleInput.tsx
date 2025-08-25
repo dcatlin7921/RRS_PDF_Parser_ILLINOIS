@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-const ConsoleInput: React.FC<{ onBookmarksParsed: (bookmarks: string[]) => void }> = ({ onBookmarksParsed }) => {
+interface ConsoleInputProps {
+    onParse: (bookmarks: string[]) => void;
+}
+
+const ConsoleInput: React.FC<ConsoleInputProps> = ({ onParse }) => {
     const [consoleOutput, setConsoleOutput] = useState('');
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -9,7 +13,7 @@ const ConsoleInput: React.FC<{ onBookmarksParsed: (bookmarks: string[]) => void 
 
     const handleParseBookmarks = () => {
         const bookmarks = parseBookmarks(consoleOutput);
-        onBookmarksParsed(bookmarks);
+        onParse(bookmarks);
         setConsoleOutput('');
     };
 

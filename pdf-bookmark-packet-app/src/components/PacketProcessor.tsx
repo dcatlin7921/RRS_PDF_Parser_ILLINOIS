@@ -1,25 +1,12 @@
-import React, { useState } from 'react';
-import { extractBookmarksFromPDF } from '../utils/pdfUtils';
+import React from 'react';
 import { generateCSV } from '../utils/csvUtils';
 
-const PacketProcessor: React.FC<{ pdfFile: File; bookmarks: string[] }> = ({ pdfFile, bookmarks }) => {
-    const [packets, setPackets] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+interface PacketProcessorProps {
+    packets: any[];
+    isProcessing: boolean;
+}
 
-    const processPDF = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const extractedPackets = await extractBookmarksFromPDF(pdfFile, bookmarks);
-            setPackets(extractedPackets);
-        } catch (err) {
-            setError('Error processing PDF: ' + (err as Error).message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
+const PacketProcessor: React.FC<PacketProcessorProps> = ({ packets, isProcessing }) => {
     const handleDownloadCSV = () => {
         const csvData = generateCSV(packets);
         const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
@@ -31,21 +18,22 @@ const PacketProcessor: React.FC<{ pdfFile: File; bookmarks: string[] }> = ({ pdf
         document.body.removeChild(link);
     };
 
+    if (isProcessing) {
+        return <p>Processing...</p>;
+    }
+
+    if (packets.length === 0) {
+        return null;
+    }
+
     return (
         <div>
-            <button onClick={processPDF} disabled={loading}>
-                {loading ? 'Processing...' : 'Process PDF'}
-            </button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {packets.length > 0 && (
-                <div>
-                    <h3>Processed Packets</h3>
-                    <pre>{JSON.stringify(packets, null, 2)}</pre>
-                    <button onClick={handleDownloadCSV}>Download CSV</button>
-                </div>
-            )}
+            <h3>Processed Packets</h3>
+            <pre>{JSON.stringify(packets, null, 2)}</pre>
+            <button onClick={handleDownloadCSV}>Download CSV</button>
         </div>
     );
 };
 
 export default PacketProcessor;
+

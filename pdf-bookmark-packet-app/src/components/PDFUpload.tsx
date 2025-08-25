@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 
-const PDFUpload: React.FC<{ onFileUpload: (file: File) => void }> = ({ onFileUpload }) => {
+interface PDFUploadProps {
+    onUpload: (file: File) => void;
+}
+
+const PDFUpload: React.FC<PDFUploadProps> = ({ onUpload }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file && file.type === 'application/pdf') {
             setSelectedFile(file);
-            onFileUpload(file);
+            onUpload(file);
         } else {
             alert('Please upload a valid PDF file.');
         }
